@@ -5,3 +5,5 @@ dist-ssr
 *.local
 *.log
 .eslintcache
+scripts/.env
+scripts/.apicount
