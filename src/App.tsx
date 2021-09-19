@@ -1,12 +1,20 @@
 // Imports
 // ========================================================
-import './App.css'
 import React, { useState, useEffect } from 'react'
 import { ethers, getDefaultProvider } from 'ethers'
+import { SearchIcon } from './components/Icons'
 
 // Contract
-import { CONTRACT_ADDRESS } from './utils/constants'
+import {
+  CONTAINER_SPACING,
+  CONTAINER_SPACING_VERTIVAL,
+  CONTRACT_ADDRESS,
+} from './utils/constants'
 import DevContract from './contract/Dev.json'
+import NavComponent from './components/Nav'
+import FooterComponent from './components/Footer'
+import { Container, Wrap, WrapItem, Box, Flex } from '@chakra-ui/layout'
+import { Input, Heading } from '@chakra-ui/react'
 
 // Main Component
 // ========================================================
@@ -57,36 +65,148 @@ const App = () => {
   // Render
   return (
     <div className="App">
-      <header className="App-header">
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <NavComponent />
+      <Box as="main" bg="white">
+        <Container maxW="full" px="0px">
+          <Wrap spacing="0px">
+            <WrapItem
+              w={{ base: '100%', md: '50%', xl: '33.33%' }}
+              borderRight={{ base: 'none', md: '1px' }}
+              borderBottom={{ base: '1px', md: 'none' }}
+              color="brand.100"
+            >
+              <Container
+                px={CONTAINER_SPACING}
+                py={CONTAINER_SPACING_VERTIVAL}
+                m="0"
+                w="full"
+                maxW="full"
+              >
+                <Flex
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mb={CONTAINER_SPACING}
+                >
+                  <Heading as="h1" size="sm" fontWeight="600" color="brand.600">
+                    DevDAO ID
+                  </Heading>
+                  <Box as="div" position="relative">
+                    <Input
+                      pl="30px"
+                      borderRadius="32px"
+                      borderWidth="1px"
+                      focusBorderColor="brand.700"
+                      _placeholder={{ color: 'brand.300' }}
+                      _focus={{ borderColor: 'brand.700' }}
+                      fontSize="sm"
+                      borderColor="brand.100"
+                      color="red.500"
+                      type="search"
+                      placeholder="Search DevDAO Id"
+                    />
+                    <SearchIcon
+                      h="11px"
+                      w="11px"
+                      position="absolute"
+                      top="0"
+                      bottom="0"
+                      left="14px"
+                      my="auto"
+                      opacity="0.6"
+                    />
+                  </Box>
+                </Flex>
+                <Box
+                  bg="brand.600"
+                  w="full"
+                  p={CONTAINER_SPACING}
+                  rounded="6px"
+                >
+                  <Flex
+                    alignItems="center"
+                    justifyContent="space-between"
+                    mb={CONTAINER_SPACING}
+                  >
+                    <Heading as="h3" size="sm" fontWeight="600" color="white">
+                      Developer
+                    </Heading>
+                  </Flex>
+                  <Box as="div" bg="white" borderRadius="4px">
+                    <Box as="img" src="/blank.png" w="100%" />
+                  </Box>
+                </Box>
+              </Container>
+            </WrapItem>
+            <WrapItem w={{ base: '100%', md: '50%', xl: '33.33%' }}>
+              <Container
+                px={CONTAINER_SPACING}
+                py={CONTAINER_SPACING_VERTIVAL}
+                m="0"
+                w="full"
+                maxW="full"
+              >
+                <Flex
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mb={CONTAINER_SPACING}
+                >
+                  <Heading as="h1" size="sm" fontWeight="600" color="brand.600">
+                    Details
+                  </Heading>
+                </Flex>
+              </Container>
+            </WrapItem>
+            <WrapItem
+              w={{ base: '100%', md: '100%', xl: '33.33%' }}
+              bg="brand.600"
+            >
+              <Container
+                px={CONTAINER_SPACING}
+                py={CONTAINER_SPACING_VERTIVAL}
+                m="0"
+                w="full"
+                maxW="full"
+              >
+                <Flex
+                  alignItems="center"
+                  justifyContent="space-between"
+                  mb={CONTAINER_SPACING}
+                >
+                  <Heading as="h1" size="sm" fontWeight="600" color="white">
+                    Ranking Table
+                  </Heading>
+                  <Box as="div" position="relative">
+                    <Input
+                      pl="30px"
+                      borderRadius="32px"
+                      borderWidth="1px"
+                      focusBorderColor="brand.700"
+                      _placeholder={{ color: 'brand.300' }}
+                      _focus={{ borderColor: 'brand.700' }}
+                      fontSize="sm"
+                      borderColor="brand.100"
+                      color="red.500"
+                      type="search"
+                      placeholder="Search DevDAO Id"
+                    />
+                    <SearchIcon
+                      h="11px"
+                      w="11px"
+                      position="absolute"
+                      top="0"
+                      bottom="0"
+                      left="14px"
+                      my="auto"
+                      opacity="0.6"
+                    />
+                  </Box>
+                </Flex>
+              </Container>
+            </WrapItem>
+          </Wrap>
+        </Container>
+      </Box>
+      <FooterComponent />
     </div>
   )
 }

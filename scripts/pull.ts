@@ -283,8 +283,8 @@ const init = async () => {
 
   console.log('-')
   TIME_END = new Date().getTime()
-  console.log(`Finsihed at: ${new Date(TIME_END).toLocaleTimeString()}`)
-  console.log(`Total time: ${TIME_END - TIME_START}`)
+  console.log(`Finished at: ${new Date(TIME_END).toLocaleTimeString()}`)
+  console.log(`Total time: ${TIME_END - TIME_START}ms`)
   process.exit(0)
 }
 
