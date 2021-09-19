@@ -10,6 +10,7 @@ import fs from 'fs'
 import { ethers } from 'ethers'
 import { abi } from '../src/contract/Dev.json'
 import shell from 'shelljs'
+import readline from 'readline'
 
 // Types
 // ========================================================
@@ -30,6 +31,11 @@ const CONTRACT_ADDRESS =
 const API_KEY = process.env.ETHERSCAN_API_KEY || 'UNKNOWN_API_KEY'
 const INTERVAL = 1000 // 1 second
 const NETWORK_NAME = process.env.NETWORK_NAME || 'mainnet'
+const THRESHOLD_PROMPT = 60 // 1 minutes
+const READLINE = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+})
 
 let JSON_DATA: JSONDataType = {
   contract: CONTRACT_ADDRESS,
@@ -37,6 +43,8 @@ let JSON_DATA: JSONDataType = {
 let API_REQUESTS_PERFORMED: number
 let FROM = 0
 let TO = 0
+let TIME_START: number = 0
+let TIME_END: number = 0
 
 // Helpers
 // ========================================================
@@ -159,6 +167,24 @@ const init = async () => {
   )
   console.log(`Estimated number of queries to perform: ${9 * (TO + 1 - FROM)}`)
 
+  if ((TO + 1 - FROM) * 9 > THRESHOLD_PROMPT) {
+    await new Promise((resolve) => {
+      READLINE.question(
+        formatText(`Are you sure you want to continue? [y/n] `, 'yellow'),
+        (response: string) => {
+          if (response !== 'y') {
+            process.exit(0)
+          }
+          resolve(true)
+        },
+      )
+    })
+  }
+
+  TIME_START = new Date().getTime()
+  console.log('-')
+  console.log(`Started at: ${new Date(TIME_START).toLocaleTimeString()}`)
+
   const JSON_TOKEN_DATA: TokenType[] = []
   const NETWORK = ethers.providers.getNetwork(NETWORK_NAME)
   const PROVIDER = new ethers.providers.EtherscanProvider(NETWORK, API_KEY)
@@ -248,12 +274,18 @@ const init = async () => {
     // Run prettier
     shell.exec(`./node_modules/.bin/prettier ${DATA_JSON_FILE} --write`)
   } catch (error) {
-    console.log('Error Occurred!', 'red')
+    console.log(formatText('Error Occurred!', 'red'))
     console.log(error)
   }
 
   // Update .apicount requests file
   fs.writeFileSync(API_COUNT_FILE, `${API_REQUESTS_PERFORMED}`)
+
+  console.log('-')
+  TIME_END = new Date().getTime()
+  console.log(`Finsihed at: ${new Date(TIME_END).toLocaleTimeString()}`)
+  console.log(`Total time: ${TIME_END - TIME_START}`)
+  process.exit(0)
 }
 
 /**
