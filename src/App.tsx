@@ -2,17 +2,17 @@
 // ========================================================
 import './App.css'
 import React, { useState, useEffect } from 'react'
-import { ethers, getDefaultProvider } from 'ethers';
+import { ethers, getDefaultProvider } from 'ethers'
 
 // Contract
-import { CONTRACT_ADDRESS } from './utils/constants';
+import { CONTRACT_ADDRESS } from './utils/constants'
 import DevContract from './contract/Dev.json'
 
 // Main Component
 // ========================================================
 /**
- * 
- * @returns 
+ *
+ * @returns
  */
 const App = () => {
   // State / Props
@@ -23,19 +23,19 @@ const App = () => {
   // Hooks
   useEffect(() => {
     const init = async () => {
-      if (typeof window.ethereum !== "undefined") {
+      if (typeof window.ethereum !== 'undefined') {
         console.log('Ethereum enabled!')
-         // Note: this will be throttled based on the user's personal browser so we will have to handle error handling
+        // Note: this will be throttled based on the user's personal browser so we will have to handle error handling
         //  ========= NOTICE =========
         //  Request-Rate Exceeded  (this message will not be repeated)
-        //  
+        //
         //  The default API keys for each service are provided as a highly-throttled,
         //  community resource for low-traffic projects and early prototyping.
-        //  
+        //
         //  While your application will continue to function, we highly recommended
         //  signing up for your own API keys to improve performance, increase your
         //  request rate/limit and enable other perks, such as metrics and advanced APIs.
-        //  
+        //
         //  For more details: https://docs.ethers.io/api-keys/
         //  ==========================
         // @TODO: uncomment this when it's ready
@@ -49,10 +49,10 @@ const App = () => {
         //   console.log({ error });
         // }
       }
-    };
+    }
 
-    init();
-  }, []);
+    init()
+  }, [])
 
   // Render
   return (
