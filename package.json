@@ -11,7 +11,11 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.6.7",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
     "ethers": "^5.4.7",
+    "framer-motion": "^4",
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
