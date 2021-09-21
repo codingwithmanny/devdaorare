@@ -46,7 +46,44 @@ npx http-server dist;
 #   http://127.0.0.1:8080
 ```
 
-## Running Rarity Script
+## Runnig Rarity Scripts
+
+## Pull Data Script
+
+**Note:** (For now), you will need a ETHERSCAN_API_KEY set in `scripts/.env`
+
+### Script Commands:
+
+- `-from` - id to start retrieving from - Expects an `integer` or the value of
+  `lastid`
+- `-to` - id to end retrieving to - Expects an `integer`
+- `-y` - answers prompt if they want to continue regardless of how much it will
+  take
+- `-r` - enables repeat on failure up to 3 times
+
+### Examples on how to run:
+
+```bash
+yarn pull -from=lastid -to=8000;
+```
+
+```bash
+yarn pull -from=200 -to=300 -y;
+```
+
+```bash
+yarn pull -from=lastid -to=7000 -y -r;
+```
+
+### Last Id & API Count
+
+The script will create two files when executing the script:
+
+- `scripts/.apicount` which keeps track of how many API requests have been made
+- `scripts/.lastid` which is the last id that was retrieve so that this value
+  can be used for `-from=lastid`
+
+## Stats Data Script
 
 ```bash
 yarn stats;

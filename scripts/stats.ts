@@ -31,7 +31,9 @@ const RANKING: {
     [key: string]: number
   }
 } = {}
-let JSON_DATA: JSONDataType = {}
+let JSON_DATA: JSONDataType = {
+  tokens: [],
+}
 let JSON_DATA_RANKING: RankingType[] = []
 
 // Helpers
@@ -191,9 +193,6 @@ const init = () => {
       rarityScore: rarityScore / Object.keys(data).length,
     }
   })
-
-  // JSON Ranking
-  console.log({ JSON_DATA_RANKING: JSON_DATA_RANKING[0] })
 }
 
 /**
