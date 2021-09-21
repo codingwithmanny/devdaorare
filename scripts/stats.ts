@@ -9,6 +9,7 @@ import { JSONDataType, TokenType, RankingType } from './types'
 
 // Constants
 // ========================================================
+const TOTAL_TOKENS = 8000
 const DATA_JSON_FILE = './scripts/data.json'
 const KEYS = [
   'os',
@@ -115,15 +116,22 @@ const init = () => {
   }
 
   // Notify user of count
-  if (JSON_DATA.tokens.length < 8000) {
+  if (JSON_DATA.tokens.length < TOTAL_TOKENS) {
     console.log(
       formatText(
-        `Warning! these stats only cover ${JSON_DATA.tokens.length} of 8000.`,
+        `Warning! these stats only cover ${JSON_DATA.tokens.length} of ${TOTAL_TOKENS}.`,
         'yellow',
       ),
     )
     console.log(
       formatText('Data may not be a fully accurate data set!', 'yellow'),
+    )
+  } else if (JSON_DATA.tokens.length > TOTAL_TOKENS) {
+    console.log(
+      formatText(
+        `The data.json file should contain a maximum of ${TOTAL_TOKENS}!`,
+        'yellow',
+      ),
     )
   }
 
@@ -184,6 +192,7 @@ const init = () => {
     }
   })
 
+  // JSON Ranking
   console.log({ JSON_DATA_RANKING: JSON_DATA_RANKING[0] })
 }
 
