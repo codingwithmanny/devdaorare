@@ -7,3 +7,4 @@ dist-ssr
 .eslintcache
 scripts/.env
 scripts/.apicount
+scripts/.lastid

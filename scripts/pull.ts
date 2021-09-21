@@ -25,6 +25,7 @@ config({ path: './scripts/.env' })
 const MIN_ID = 1
 const MAX_ID = 8000
 const API_COUNT_FILE = './scripts/.apicount'
+const LAST_ID_PULLED = './scripts/.lastid'
 const DATA_JSON_FILE = './scripts/data.json'
 const CONTRACT_ADDRESS =
   process.env.CONTRACT_ADDRESS || 'UNKNOWN_CONTRACT_ADDRESS'
@@ -36,15 +37,20 @@ const READLINE = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 })
+const FAILURE_COUNT_THRESHOLD = 3
 
 let JSON_DATA: JSONDataType = {
   contract: CONTRACT_ADDRESS,
+  tokens: [],
 }
 let API_REQUESTS_PERFORMED: number
 let FROM = 0
 let TO = 0
 let TIME_START: number = 0
 let TIME_END: number = 0
+let FORCE_START = false
+let FAILURE_COUNT = 0
+let FORCE_REPEAT = false
 
 // Helpers
 // ========================================================
@@ -117,10 +123,19 @@ const parseTime = (time: number) => {
 // Validate Flags
 // ========================================================
 process.argv.map((flag: string) => {
-  if (flag.startsWith('-from') && parseInt(flag.split('=')[1], 0) > 0) {
-    FROM = parseInt(flag.split('=')[1], 0)
+  const flagFromValue = flag.split('=')[1]
+  if (flag.startsWith('-from') && flagFromValue) {
+    if (flagFromValue === 'lastid' && fs.existsSync(LAST_ID_PULLED)) {
+      FROM = parseInt(fs.readFileSync(LAST_ID_PULLED).toString(), 0) + 1
+    } else {
+      FROM = parseInt(flagFromValue, 0)
+    }
   } else if (flag.startsWith('-to') && parseInt(flag.split('=')[1], 0) > 0) {
     TO = parseInt(flag.split('=')[1], 0)
+  } else if (flag.startsWith('-y')) {
+    FORCE_START = true
+  } else if (flag.startsWith('-r')) {
+    FORCE_REPEAT = true
   }
 })
 
@@ -148,6 +163,10 @@ API_REQUESTS_PERFORMED = parseInt(
   0,
 )
 
+if (FORCE_REPEAT) {
+  console.log(formatText('REPEAT ENABLED', 'yellow'))
+}
+
 // Init
 // ========================================================
 /**
@@ -166,9 +185,11 @@ const init = async () => {
     )}`,
   )
   console.log(`Estimated number of queries to perform: ${9 * (TO + 1 - FROM)}`)
+  console.log(`Total API requests performed so far: ${API_REQUESTS_PERFORMED}`)
 
-  if ((TO + 1 - FROM) * 9 > THRESHOLD_PROMPT) {
+  if ((TO + 1 - FROM) * 9 > THRESHOLD_PROMPT && !FORCE_START) {
     await new Promise((resolve) => {
+      console.log('-')
       READLINE.question(
         formatText(`Are you sure you want to continue? [y/n] `, 'yellow'),
         (response: string) => {
@@ -232,7 +253,7 @@ const init = async () => {
 
       JSON_TOKEN_DATA.push(DATA)
 
-      if (JSON_DATA.tokens && JSON_DATA.tokens.length > 0) {
+      if (JSON_DATA.tokens.length > 0) {
         INDEX = JSON_DATA.tokens.findIndex((token) => token.id === i)
         if (INDEX > -1) {
           JSON_DATA.tokens[INDEX] = DATA
@@ -240,9 +261,6 @@ const init = async () => {
       }
 
       if (INDEX === -1) {
-        if (!JSON_DATA.tokens) {
-          JSON_DATA.tokens = []
-        }
         JSON_DATA.tokens.push(DATA)
       }
 
@@ -250,42 +268,64 @@ const init = async () => {
 
       API_REQUESTS_PERFORMED += 10
     }
-
-    // Write file
-    fs.writeFileSync(`${__dirname}/data.json`, JSON.stringify(JSON_DATA))
-
-    // Output results
-    console.log('-')
-    console.log(
-      formatText(
-        `Successfully pulled ${JSON_TOKEN_DATA.length} items.`,
-        'green',
-      ),
-    )
-    console.log(`API requests performed today: ${API_REQUESTS_PERFORMED}`)
-    console.log(
-      formatText(
-        `Take note that the free tier has a limit of 100,000 requests per day`,
-        'yellow',
-      ),
-    )
-    console.log('-')
-
-    // Run prettier
-    shell.exec(`./node_modules/.bin/prettier ${DATA_JSON_FILE} --write`)
   } catch (error) {
     console.log(formatText('Error Occurred!', 'red'))
     console.log(error)
+    FAILURE_COUNT++
   }
+
+  // @NOTE place the sort and write outside the try and catch
+  // That way if one request fails it will write what was captured still
+  // and not waste api calls
+
+  // Sort
+  if (JSON_DATA.tokens && JSON_DATA.tokens.length > 0) {
+    JSON_DATA.tokens.sort((a, b) => a.id - b.id)
+  }
+
+  // Write file
+  fs.writeFileSync(`${__dirname}/data.json`, JSON.stringify(JSON_DATA))
+
+  // Output results
+  console.log('-')
+  console.log(
+    formatText(`Successfully pulled ${JSON_TOKEN_DATA.length} items.`, 'green'),
+  )
+  console.log(`API requests performed today: ${API_REQUESTS_PERFORMED}`)
+  console.log(
+    formatText(
+      `Take note that the free tier has a limit of 100,000 requests per day`,
+      'yellow',
+    ),
+  )
+
+  // Run prettier
+  shell.exec(`./node_modules/.bin/prettier ${DATA_JSON_FILE} --write`)
 
   // Update .apicount requests file
   fs.writeFileSync(API_COUNT_FILE, `${API_REQUESTS_PERFORMED}`)
 
-  console.log('-')
-  TIME_END = new Date().getTime()
-  console.log(`Finished at: ${new Date(TIME_END).toLocaleTimeString()}`)
-  console.log(`Total time: ${TIME_END - TIME_START}ms`)
-  process.exit(0)
+  // Update .last with the last id pulled
+  FROM = JSON_DATA.tokens[JSON_DATA.tokens.length - 1].id
+  fs.writeFileSync(LAST_ID_PULLED, FROM.toString())
+
+  if (
+    FORCE_REPEAT &&
+    FAILURE_COUNT - 1 < FAILURE_COUNT_THRESHOLD &&
+    FROM < TO
+  ) {
+    console.log('-')
+    console.log(formatText(`RETRYING`, 'yellow'))
+    console.log(`Attempt: ${FAILURE_COUNT + 1}`)
+    await delay(INTERVAL)
+    init()
+  } else {
+    console.log('-')
+    TIME_END = new Date().getTime()
+    console.log(`Finished at: ${new Date(TIME_END).toLocaleTimeString()}`)
+    console.log(`Total time: ${TIME_END - TIME_START}ms`)
+    process.exit(0)
+  }
 }
 
 /**

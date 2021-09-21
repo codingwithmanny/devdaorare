@@ -30,7 +30,7 @@ export interface JSONDataType {
   contract?: string
   name?: string
   symbol?: string
-  tokens?: TokenType[]
+  tokens: TokenType[]
 }
 
 /**
