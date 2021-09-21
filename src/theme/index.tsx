@@ -1,11 +1,6 @@
 // Imports
 // ========================================================
-import {
-  extendTheme,
-  theme as base,
-  withDefaultColorScheme,
-  withDefaultVariant,
-} from '@chakra-ui/react'
+import { extendTheme, theme as base } from '@chakra-ui/react'
 
 // Configurations
 // ========================================================
@@ -30,7 +25,13 @@ const theme = extendTheme({
       800: '#A3D6FF',
     },
   },
-  components: {},
+  components: {
+    Input: {
+      defaultProps: {
+        focusBorderColor: 'brand.700',
+      },
+    },
+  },
   styles: {
     global: () => ({
       body: {
