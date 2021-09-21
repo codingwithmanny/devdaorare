@@ -35,6 +35,7 @@ let JSON_DATA: JSONDataType = {
   tokens: [],
 }
 let JSON_DATA_RANKING: RankingType[] = []
+let RARITY_TOKEN_FROM_ID: number = 0
 
 // Helpers
 // ========================================================
@@ -101,20 +102,40 @@ const defineRanking = (key: string, obj: { [key: string]: number }) => {
   return resultObj
 }
 
+// Validate Flags
+// ========================================================
+process.argv.map((flag: string) => {
+  const flagFromValue = flag.split('=')[1]
+  if (flag.startsWith('-id') && flagFromValue) {
+    const tokenId: number = parseInt(flagFromValue)
+    if (tokenId >= 1 && tokenId <= TOTAL_TOKENS) {
+      RARITY_TOKEN_FROM_ID = parseInt(flagFromValue)
+    } else {
+      console.log(
+        formatText(
+          `Error! The token ID must be an integer between 1 and  ${TOTAL_TOKENS}.`,
+          'red',
+        ),
+      )
+      process.exit(0)
+    }
+  }
+})
+
 // Init
 // ========================================================
 const init = () => {
   // Double check if file exists
   if (!fs.existsSync(DATA_JSON_FILE)) {
     console.log(formatText('Error! data.json file not found.', 'red'))
-    process.exit(0)
+    //process.exit(0)
   }
 
   // Read data and validate
   JSON_DATA = JSON.parse(fs.readFileSync(DATA_JSON_FILE).toString())
   if (!JSON_DATA.tokens || JSON_DATA.tokens.length === 0) {
     console.log(formatText('Error! No tokens found.', 'red'))
-    process.exit(0)
+    //process.exit(0)
   }
 
   // Notify user of count
@@ -144,55 +165,98 @@ const init = () => {
 
   // Define ranking
   for (let i = 0; i < KEYS.length; i++) {
-    RANKING[KEYS[i]] = defineRanking(KEYS[i], OCCURANCES[KEYS[i]])
+    RANKING[String(KEYS[i])] = defineRanking(KEYS[i], OCCURANCES[KEYS[i]])
   }
 
   // Set ranking
-  JSON_DATA_RANKING = JSON_DATA.tokens.map((dev) => {
-    const data = {
-      os: RANKING.os[dev.os],
-      textEditor: RANKING.textEditor[dev.textEditor],
-      clothing: RANKING.clothing[dev.clothing],
-      language: RANKING.language[dev.language],
-      industry: RANKING.industry[dev.industry],
-      location: RANKING.location[dev.location],
-      mind: RANKING.mind[dev.mind],
-      vibe: RANKING.vibe[dev.vibe],
+  JSON_DATA_RANKING = JSON_DATA.tokens
+    .filter(function (dev) {
+      if (
+        RARITY_TOKEN_FROM_ID == 0 ||
+        (RARITY_TOKEN_FROM_ID > 0 && dev.id == RARITY_TOKEN_FROM_ID)
+      ) {
+        return true
+      }
+      return false
+    })
+    .map((dev) => {
+      const data = {
+        os: RANKING.os[dev.os],
+        textEditor: RANKING.textEditor[dev.textEditor],
+        clothing: RANKING.clothing[dev.clothing],
+        language: RANKING.language[dev.language],
+        industry: RANKING.industry[dev.industry],
+        location: RANKING.location[dev.location],
+        mind: RANKING.mind[dev.mind],
+        vibe: RANKING.vibe[dev.vibe],
+      }
+
+      const score = {
+        osScore: RANKING.os[dev.os] / Object.keys(OCCURANCES.os).length,
+        textEditorScore:
+          RANKING.textEditor[dev.textEditor] /
+          Object.keys(OCCURANCES.textEditor).length,
+        clothingScore:
+          RANKING.clothing[dev.clothing] /
+          Object.keys(OCCURANCES.clothing).length,
+        languageScore:
+          RANKING.language[dev.language] /
+          Object.keys(OCCURANCES.language).length,
+        industryScore:
+          RANKING.industry[dev.industry] /
+          Object.keys(OCCURANCES.industry).length,
+        locationScore:
+          RANKING.location[dev.location] /
+          Object.keys(OCCURANCES.location).length,
+        mindScore: RANKING.mind[dev.mind] / Object.keys(OCCURANCES.mind).length,
+        vibeScore: RANKING.vibe[dev.vibe] / Object.keys(OCCURANCES.vibe).length,
+      }
+
+      const rarityRanking = Object.values(data).reduce((a, b) => a + b)
+      const rarityScore = Object.values(score).reduce((a, b) => a + b)
+      const rarityToken = {
+        id: dev.id,
+        ...data,
+        ...score,
+        rarityRanking,
+        rarityScoreSum: rarityScore,
+        rarityScore: rarityScore / Object.keys(data).length,
+      }
+
+      return rarityToken
+    })
+
+  /* One token catching */
+  if (RARITY_TOKEN_FROM_ID > 0) {
+    if (JSON_DATA_RANKING.length != 1) {
+      /* The JSON_DATA_RANKING must be length 1 */
+      console.log(
+        formatText(
+          `The token ID ${RARITY_TOKEN_FROM_ID} was not found in the list!`,
+          'red',
+        ),
+      )
+    } else {
+      /* If the token is found, show the rarity */
+      console.log(
+        formatText(
+          `Here is the result for token ID ${RARITY_TOKEN_FROM_ID}`,
+          'green',
+        ),
+      )
+      console.log(JSON_DATA_RANKING[0])
     }
+    process.exit(0)
+  }
 
-    const score = {
-      osScore: RANKING.os[dev.os] / Object.keys(OCCURANCES.os).length,
-      textEditorScore:
-        RANKING.textEditor[dev.textEditor] /
-        Object.keys(OCCURANCES.textEditor).length,
-      clothingScore:
-        RANKING.clothing[dev.clothing] /
-        Object.keys(OCCURANCES.clothing).length,
-      languageScore:
-        RANKING.language[dev.language] /
-        Object.keys(OCCURANCES.language).length,
-      industryScore:
-        RANKING.industry[dev.industry] /
-        Object.keys(OCCURANCES.industry).length,
-      locationScore:
-        RANKING.location[dev.location] /
-        Object.keys(OCCURANCES.location).length,
-      mindScore: RANKING.mind[dev.mind] / Object.keys(OCCURANCES.mind).length,
-      vibeScore: RANKING.vibe[dev.vibe] / Object.keys(OCCURANCES.vibe).length,
-    }
+  // Sort based on rarityRanking
+  JSON_DATA_RANKING.sort((a, b) => a.rarityRanking - b.rarityRanking)
 
-    const rarityRanking = Object.values(data).reduce((a, b) => a + b)
-
-    const rarityScore = Object.values(score).reduce((a, b) => a + b)
-
-    return {
-      id: dev.id,
-      ...data,
-      ...score,
-      rarityRanking,
-      rarityScore: rarityScore / Object.keys(data).length,
-    }
-  })
+  // JSON Ranking
+  for (let i = 0; i < 27; i++) {
+    console.log(`${i + 1}. ${JSON_DATA_RANKING[i].id}`)
+    console.log(JSON_DATA_RANKING[i])
+  }
 }
 
 /**
