@@ -1,7 +1,9 @@
 # Dev DAO Rare
 
 Website dedicated to showing the rarity of https://developerdao.com minted NFTs.
-The website shows the rarity based on how often keywords are used and weights each keyword to give an average rarity value (lowest number being the most rare).
+The website shows the rarity based on how often keywords are used and weights
+each keyword to give an average rarity value (lowest number being the most
+rare).
 
 ## Requirements
 
@@ -44,7 +46,7 @@ npx http-server dist;
 #   http://127.0.0.1:8080
 ```
 
-## Runnig Rarity Script
+## Running Rarity Script
 
 ```bash
 yarn stats;
