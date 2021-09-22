@@ -280,6 +280,14 @@ const init = () => {
       );
       console.log(JSON_DATA_RANKING[0]);
     }
+  } else {
+    // Sort based on rarityRanking
+    JSON_DATA_RANKING.sort((a, b) => a.rarityRanking - b.rarityRanking);
+
+    // JSON Ranking
+    for (let i = 0; i < 27; i++) {
+      console.log(`${i + 1}. ${JSON_DATA_RANKING[i].id}`);
+    }
   }
 };
 
