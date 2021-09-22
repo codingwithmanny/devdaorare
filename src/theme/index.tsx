@@ -1,6 +1,6 @@
 // Imports
 // ========================================================
-import { extendTheme, theme as base } from '@chakra-ui/react'
+import { extendTheme, theme as base } from '@chakra-ui/react';
 
 // Configurations
 // ========================================================
@@ -39,8 +39,8 @@ const theme = extendTheme({
       },
     }),
   },
-})
+});
 
 // Exports
 // ========================================================
-export default theme
+export default theme;

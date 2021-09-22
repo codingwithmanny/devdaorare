@@ -1,7 +1,7 @@
 // Imports
 // ========================================================
-import React from 'react'
-import ChakraProviderWrapper from './chakra'
+import React from 'react';
+import ChakraProviderWrapper from './chakra';
 
 // Root Provider
 // ========================================================
@@ -15,9 +15,9 @@ const RootProvider: React.FC = ({ children }) => {
     <div>
       <ChakraProviderWrapper>{children}</ChakraProviderWrapper>
     </div>
-  )
-}
+  );
+};
 
 // Exports
 // ========================================================
-export default RootProvider
+export default RootProvider;
