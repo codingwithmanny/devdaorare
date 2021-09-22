@@ -141,7 +141,7 @@ const checkValidToken = (tokenId: number): number => {
 };
 // Validate Flags
 // ========================================================
-process.argv.map((flag: string) => {
+process.argv.forEach((flag: string) => {
   const flagFromValue = flag.split('=')[1];
   if (flag.startsWith('-id') && flagFromValue) {
     /* Show a token ID */
@@ -292,7 +292,7 @@ const init = () => {
     /***
     /* One token catching 
     /**/
-    if (JSON_DATA_RANKING.length != 1) {
+    if (JSON_DATA_RANKING.length !== 1) {
       /* The JSON_DATA_RANKING must be length 1 */
       console.log(
         formatText(
