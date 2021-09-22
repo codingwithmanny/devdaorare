@@ -10,6 +10,7 @@ import { JSONDataType, TokenType, RankingType } from './types';
 // ========================================================
 const TOTAL_TOKENS = 8000;
 const DATA_JSON_FILE = './scripts/data.json';
+const DATA_STATS_FILE = './public/stats.json';
 const KEYS = [
   'os',
   'textEditor',
@@ -36,6 +37,8 @@ let JSON_DATA: JSONDataType = {
 let JSON_DATA_RANKING: RankingType[] = [];
 let RARITY_TOKEN_FROM_ID = 0;
 let SHOW_WEIGHTS = false;
+let GENERATE_PUBLIC_STATS_FILE = false;
+let RESULTS_TO_SHOW = 50;
 
 // Helpers
 // ========================================================
@@ -85,7 +88,7 @@ const balanceWeights = (sortable: [string, number][]) => {
   let previousCount = 0,
     currentIndex = 0;
 
-  sortable.map((i, k) => {
+  sortable.forEach((i, k) => {
     if (previousCount === 0 || previousCount !== i[1]) currentIndex++;
     balancedSortable.push([i[0], currentIndex]);
     previousCount = i[1];
@@ -122,29 +125,42 @@ const defineRanking = (key: string, obj: { [key: string]: number }) => {
   return resultObj;
 };
 
+const checkValidToken = (tokenId: number): number => {
+  if (tokenId >= 1 && tokenId <= TOTAL_TOKENS) {
+    return Number(tokenId);
+  } else {
+    console.log(
+      formatText(
+        `Error! The token ID/results number must be an integer between 1 and  ${TOTAL_TOKENS}.`,
+        'red',
+      ),
+    );
+    process.exit(0);
+  }
+  return 0;
+};
 // Validate Flags
 // ========================================================
 process.argv.map((flag: string) => {
   const flagFromValue = flag.split('=')[1];
   if (flag.startsWith('-id') && flagFromValue) {
     /* Show a token ID */
-    const tokenId: number = parseInt(flagFromValue);
-    if (tokenId >= 1 && tokenId <= TOTAL_TOKENS) {
-      RARITY_TOKEN_FROM_ID = parseInt(flagFromValue);
-    } else {
-      console.log(
-        formatText(
-          `Error! The token ID must be an integer between 1 and  ${TOTAL_TOKENS}.`,
-          'red',
-        ),
-      );
-      process.exit(0);
-    }
+    RARITY_TOKEN_FROM_ID = checkValidToken(Number(flagFromValue));
+  }
+
+  if (flag.startsWith('-results') && flagFromValue) {
+    /* Show the first {RESULTS_TO_SHOW} tokens */
+    RESULTS_TO_SHOW = checkValidToken(Number(flagFromValue));
   }
 
   if (flag.startsWith('-weights') && !flagFromValue) {
     /* Show the weights for each trait */
     SHOW_WEIGHTS = true;
+  }
+
+  if (flag.startsWith('-generate') && !flagFromValue) {
+    /* Should the /public/stats.json file be generated? */
+    GENERATE_PUBLIC_STATS_FILE = true;
   }
 });
 
@@ -206,8 +222,9 @@ const init = () => {
   JSON_DATA_RANKING = JSON_DATA.tokens
     .filter(function (dev) {
       if (
-        RARITY_TOKEN_FROM_ID == 0 ||
-        (RARITY_TOKEN_FROM_ID > 0 && dev.id == RARITY_TOKEN_FROM_ID)
+        GENERATE_PUBLIC_STATS_FILE ||
+        RARITY_TOKEN_FROM_ID === 0 ||
+        (RARITY_TOKEN_FROM_ID > 0 && dev.id === RARITY_TOKEN_FROM_ID)
       ) {
         return true;
       }
@@ -260,8 +277,21 @@ const init = () => {
       return rarityToken;
     });
 
-  /* One token catching */
+  if (GENERATE_PUBLIC_STATS_FILE) {
+    const jsonContent = JSON.stringify(JSON_DATA_RANKING);
+    fs.writeFileSync(DATA_STATS_FILE, jsonContent);
+
+    /* Confirmation message */
+    console.log(
+      formatText(`The ${DATA_STATS_FILE} file was written!`, 'green'),
+    );
+    process.exit(0);
+  }
+
   if (RARITY_TOKEN_FROM_ID > 0) {
+    /***
+    /* One token catching 
+    /**/
     if (JSON_DATA_RANKING.length != 1) {
       /* The JSON_DATA_RANKING must be length 1 */
       console.log(
@@ -281,11 +311,18 @@ const init = () => {
       console.log(JSON_DATA_RANKING[0]);
     }
   } else {
+    /***
+    /* Show the first {RESULTS_TO_SHOW} entries 
+    /**/
+    console.log(
+      formatText(`Here you have the first ${RESULTS_TO_SHOW} results`, 'green'),
+    );
+
     // Sort based on rarityRanking
     JSON_DATA_RANKING.sort((a, b) => a.rarityRanking - b.rarityRanking);
 
     // JSON Ranking
-    for (let i = 0; i < 27; i++) {
+    for (let i = 0; i < RESULTS_TO_SHOW; i++) {
       console.log(`${i + 1}. ${JSON_DATA_RANKING[i].id}`);
     }
   }
