@@ -9,3 +9,5 @@ package-lock.json
 scripts/.env
 scripts/.apicount
 scripts/.lastid
+# remove later
+*.zip
