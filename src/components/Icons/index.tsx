@@ -1,7 +1,7 @@
 // Icons
 // ========================================================
-import React from 'react'
-import { Box } from '@chakra-ui/react'
+import React from 'react';
+import { Box } from '@chakra-ui/react';
 
 // Icons
 // ========================================================
@@ -32,7 +32,7 @@ export const LogoIcon = ({ variation = '', ...props }) => {
         />
         <circle cx="12.0208" cy="12" r="3" fill="#008DFF" />
       </Box>
-    )
+    );
   }
 
   return (
@@ -55,8 +55,8 @@ export const LogoIcon = ({ variation = '', ...props }) => {
       />
       <circle cx="12.0208" cy="12" r="3" fill="#121212" />
     </Box>
-  )
-}
+  );
+};
 
 /**
  *
@@ -80,8 +80,8 @@ export const GitHubIcon = ({ ...props }) => {
         fill="white"
       />
     </Box>
-  )
-}
+  );
+};
 
 /**
  *
@@ -114,5 +114,5 @@ export const SearchIcon = ({ ...props }) => {
         fill="#838383"
       />
     </Box>
-  )
-}
+  );
+};

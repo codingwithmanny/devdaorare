@@ -1,12 +1,12 @@
 // Imports
 // ========================================================
-import React from 'react'
-import { Link, Container, Flex, Spacer, Box } from '@chakra-ui/layout'
+import React from 'react';
+import { Link, Container, Flex, Box } from '@chakra-ui/layout';
 import {
   CONTAINER_SPACING,
   CONTAINER_SPACING_VERTIVAL,
-} from '../../utils/constants'
-import { LogoIcon } from '../Icons'
+} from '../../utils/constants';
+import { LogoIcon } from '../Icons';
 
 // Component
 // ========================================================
@@ -33,9 +33,9 @@ const FooterComponent = () => {
         </Flex>
       </Container>
     </footer>
-  )
-}
+  );
+};
 
 // Exports
 // ========================================================
-export default FooterComponent
+export default FooterComponent;
