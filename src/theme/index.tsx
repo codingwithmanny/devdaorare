@@ -31,6 +31,23 @@ const theme = extendTheme({
         focusBorderColor: 'brand.700',
       },
     },
+    Button: {
+      baseStyle: {
+        borderRadius: '4px',
+      },
+      variants: {
+        outlineWhite: {
+          color: 'white',
+          background: 'transparent',
+          borderWidth: '1px',
+          borderColor: 'white',
+          _hover: {
+            background: 'white',
+            color: 'brand.700',
+          },
+        },
+      },
+    },
   },
   styles: {
     global: () => ({

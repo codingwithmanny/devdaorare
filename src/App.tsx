@@ -177,10 +177,7 @@ const App = () => {
                     <Input
                       pl="30px"
                       borderRadius="32px"
-                      borderWidth="1px"
-                      focusBorderColor="brand.700"
                       _placeholder={{ color: 'brand.300' }}
-                      _focus={{ borderColor: 'brand.700' }}
                       fontSize="sm"
                       borderColor="brand.100"
                       color="red.500"
