@@ -32,10 +32,10 @@ const RANKING: {
 } = {};
 let JSON_DATA: JSONDataType = {
   tokens: [],
-let JSON_DATA_RANKING: RankingType[] = []
-let RARITY_TOKEN_FROM_ID: number = 0
-let SHOW_WEIGHTS: boolean = false
-
+};
+let JSON_DATA_RANKING: RankingType[] = [];
+let RARITY_TOKEN_FROM_ID = 0;
+let SHOW_WEIGHTS = false;
 
 // Helpers
 // ========================================================
@@ -80,18 +80,19 @@ const balanceWeights = (sortable: [string, number][]) => {
   /* This function will set the value for each trait equally
   /* depending on the total number of tokens including it
   /*/
-  let balancedSortable: [string, number][] = [],
-    previousCount: number = 0,
-    currentIndex: number = 0
+  const balancedSortable: [string, number][] = [];
+
+  let previousCount = 0,
+    currentIndex = 0;
 
   sortable.map((i, k) => {
-    if (previousCount == 0 || previousCount != i[1]) currentIndex++
-    balancedSortable.push([i[0], currentIndex])
-    previousCount = i[1]
-  })
+    if (previousCount === 0 || previousCount !== i[1]) currentIndex++;
+    balancedSortable.push([i[0], currentIndex]);
+    previousCount = i[1];
+  });
 
-  return balancedSortable
-}
+  return balancedSortable;
+};
 
 /**
  *
@@ -112,7 +113,7 @@ const defineRanking = (key: string, obj: { [key: string]: number }) => {
   sortable.sort((a, b) => a[1] - b[1]);
 
   // Adjust for 0, adding 1
-  sortable = balanceWeights(sortable)
+  sortable = balanceWeights(sortable);
   // Old function: sortable = sortable.map((i, k) => [i[0], k + 1]);
 
   // Set values for result
@@ -124,28 +125,28 @@ const defineRanking = (key: string, obj: { [key: string]: number }) => {
 // Validate Flags
 // ========================================================
 process.argv.map((flag: string) => {
-  const flagFromValue = flag.split('=')[1]
+  const flagFromValue = flag.split('=')[1];
   if (flag.startsWith('-id') && flagFromValue) {
     /* Show a token ID */
-    const tokenId: number = parseInt(flagFromValue)
+    const tokenId: number = parseInt(flagFromValue);
     if (tokenId >= 1 && tokenId <= TOTAL_TOKENS) {
-      RARITY_TOKEN_FROM_ID = parseInt(flagFromValue)
+      RARITY_TOKEN_FROM_ID = parseInt(flagFromValue);
     } else {
       console.log(
         formatText(
           `Error! The token ID must be an integer between 1 and  ${TOTAL_TOKENS}.`,
           'red',
         ),
-      )
-      process.exit(0)
+      );
+      process.exit(0);
     }
   }
 
   if (flag.startsWith('-weights') && !flagFromValue) {
     /* Show the weights for each trait */
-    SHOW_WEIGHTS = true
+    SHOW_WEIGHTS = true;
   }
-})
+});
 
 // Init
 // ========================================================
@@ -196,9 +197,9 @@ const init = () => {
   if (SHOW_WEIGHTS) {
     console.log(
       formatText(`These are the current weights used for each trait`, 'green'),
-    )
-    console.log(RANKING)
-    process.exit(0)
+    );
+    console.log(RANKING);
+    process.exit(0);
   }
 
   // Set ranking
@@ -208,9 +209,9 @@ const init = () => {
         RARITY_TOKEN_FROM_ID == 0 ||
         (RARITY_TOKEN_FROM_ID > 0 && dev.id == RARITY_TOKEN_FROM_ID)
       ) {
-        return true
+        return true;
       }
-      return false
+      return false;
     })
     .map((dev) => {
       const data = {
@@ -222,7 +223,7 @@ const init = () => {
         location: RANKING.location[dev.location],
         mind: RANKING.mind[dev.mind],
         vibe: RANKING.vibe[dev.vibe],
-      }
+      };
 
       const score = {
         osScore: RANKING.os[dev.os] / Object.keys(OCCURANCES.os).length,
@@ -243,10 +244,10 @@ const init = () => {
           Object.keys(OCCURANCES.location).length,
         mindScore: RANKING.mind[dev.mind] / Object.keys(OCCURANCES.mind).length,
         vibeScore: RANKING.vibe[dev.vibe] / Object.keys(OCCURANCES.vibe).length,
-      }
+      };
 
-      const rarityRanking = Object.values(data).reduce((a, b) => a + b)
-      const rarityScore = Object.values(score).reduce((a, b) => a + b)
+      const rarityRanking = Object.values(data).reduce((a, b) => a + b);
+      const rarityScore = Object.values(score).reduce((a, b) => a + b);
       const rarityToken = {
         id: dev.id,
         ...data,
@@ -254,10 +255,10 @@ const init = () => {
         rarityRanking,
         rarityScoreSum: rarityScore,
         rarityScore: rarityScore / Object.keys(data).length,
-      }
+      };
 
-      return rarityToken
-  })
+      return rarityToken;
+    });
 
   /* One token catching */
   if (RARITY_TOKEN_FROM_ID > 0) {
@@ -268,7 +269,7 @@ const init = () => {
           `The token ID ${RARITY_TOKEN_FROM_ID} was not found in the list!`,
           'red',
         ),
-      )
+      );
     } else {
       /* If the token is found, show the rarity */
       console.log(
@@ -276,10 +277,10 @@ const init = () => {
           `Here is the result for token ID ${RARITY_TOKEN_FROM_ID}`,
           'green',
         ),
-      )
-      console.log(JSON_DATA_RANKING[0])
+      );
+      console.log(JSON_DATA_RANKING[0]);
     }
- }
+  }
 };
 
 /**
