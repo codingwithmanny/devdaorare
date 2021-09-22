@@ -1,12 +1,14 @@
 // Imports
 // ========================================================
-import React from 'react'
-import { Link, Container, Flex, Spacer, Box } from '@chakra-ui/layout'
+import React from 'react';
+import { Link, Container, Flex, Box } from '@chakra-ui/layout';
+import { Button } from '@chakra-ui/button';
 import {
   CONTAINER_SPACING,
   CONTAINER_SPACING_VERTIVAL,
-} from '../../utils/constants'
-import { LogoIcon } from '../Icons'
+  DATA_FILE,
+} from '../../utils/constants';
+import { LogoIcon } from '../Icons';
 
 // Component
 // ========================================================
@@ -15,6 +17,26 @@ import { LogoIcon } from '../Icons'
  * @returns
  */
 const FooterComponent = () => {
+  // State / Props
+
+  // Functions
+  /**
+   *
+   * @param event
+   */
+  const onClickHow = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    // @TODO: Add modal interaction
+    event.preventDefault();
+  };
+
+  /**
+   *
+   */
+  const onClickDownload = () => {
+    window.location.href = DATA_FILE;
+  };
+
+  // Render
   return (
     <footer>
       <Container
@@ -24,18 +46,62 @@ const FooterComponent = () => {
         py={CONTAINER_SPACING_VERTIVAL}
         color="brand.800"
       >
-        <Flex alignItems="center">
-          <LogoIcon variation="small" w="14px" h="14px" mr="5px" />
-          <Box as="p" fontSize="xs" fontWeight="500">
-            Project created by <Link>@person</Link> &amp;{' '}
-            <Link>@otherperson</Link>
-          </Box>
+        <Flex flexWrap="wrap">
+          <Flex
+            w={{ base: '100%', md: '50%' }}
+            h="auto"
+            flexDirection="column"
+            justifyContent="space-between"
+          >
+            <Flex alignItems="center">
+              <LogoIcon variation="small" w="14px" h="14px" mr="5px" />
+              <Box as="p" fontSize="xs" fontWeight="500">
+                Project Created By <Link color="white">@person</Link> &amp;{' '}
+                <Link color="white">@otherperson</Link>
+              </Box>
+            </Flex>
+            <Box
+              my={{ base: '20px', md: '0px' }}
+              as="p"
+              fontSize="xs"
+              fontWeight="500"
+            >
+              LICENSE: MIT
+            </Box>
+          </Flex>
+          <Flex
+            w={{ base: '100%', md: '50%' }}
+            justifyContent="flex-end"
+            alignItems={{ base: 'flex-start', md: 'flex-end' }}
+            flexDirection="column"
+          >
+            <Link
+              href="https://developerdao.com"
+              target="_blank"
+              fontSize="xs"
+              mb="10px"
+              _hover={{ color: 'white' }}
+            >
+              Developer DAO
+            </Link>
+            <Link
+              onClick={onClickHow}
+              fontSize="xs"
+              mb="20px"
+              _hover={{ color: 'white' }}
+            >
+              How is ranking calculated?
+            </Link>
+            <Button onClick={onClickDownload} variant="outlineWhite">
+              Download Data
+            </Button>
+          </Flex>
         </Flex>
       </Container>
     </footer>
-  )
-}
+  );
+};
 
 // Exports
 // ========================================================
-export default FooterComponent
+export default FooterComponent;

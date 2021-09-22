@@ -1,16 +1,15 @@
-/* eslint-disable */
 // Imports
 // ========================================================
-import fs from 'fs'
+import fs from 'fs';
 
 // Types
 // ========================================================
-import { JSONDataType, TokenType, RankingType } from './types'
+import { JSONDataType, TokenType, RankingType } from './types';
 
 // Constants
 // ========================================================
-const TOTAL_TOKENS = 8000
-const DATA_JSON_FILE = './scripts/data.json'
+const TOTAL_TOKENS = 8000;
+const DATA_JSON_FILE = './scripts/data.json';
 const KEYS = [
   'os',
   'textEditor',
@@ -20,23 +19,23 @@ const KEYS = [
   'location',
   'mind',
   'vibe',
-]
+];
 const OCCURANCES: {
   [key: string]: {
-    [key: string]: number
-  }
-} = {}
+    [key: string]: number;
+  };
+} = {};
 const RANKING: {
   [key: string]: {
-    [key: string]: number
-  }
-} = {}
+    [key: string]: number;
+  };
+} = {};
 let JSON_DATA: JSONDataType = {
   tokens: [],
-}
 let JSON_DATA_RANKING: RankingType[] = []
 let RARITY_TOKEN_FROM_ID: number = 0
 let SHOW_WEIGHTS: boolean = false
+
 
 // Helpers
 // ========================================================
@@ -51,14 +50,14 @@ const formatText = (
   color: 'red' | 'yellow' | 'green' | undefined,
 ) => {
   if (color === 'red') {
-    return `\x1b[31m${value}\x1b[0m`
+    return `\x1b[31m${value}\x1b[0m`;
   } else if (color === 'yellow') {
-    return `\x1b[33m${value}\x1b[0m`
+    return `\x1b[33m${value}\x1b[0m`;
   } else if (color === 'green') {
-    return `\x1b[32m${value}\x1b[0m`
+    return `\x1b[32m${value}\x1b[0m`;
   }
-  return value
-}
+  return value;
+};
 
 /**
  *
@@ -66,15 +65,15 @@ const formatText = (
  * @param arrayObj
  */
 const findOccurances = (key: string, arrayObj: TokenType[]) => {
-  const dictionary: { [key: string]: number } = {}
+  const dictionary: { [key: string]: number } = {};
   for (let i = 0; i < arrayObj.length; i++) {
     if (!dictionary[arrayObj[i][key as keyof TokenType] as string]) {
-      dictionary[arrayObj[i][key as keyof TokenType] as string] = 0
+      dictionary[arrayObj[i][key as keyof TokenType] as string] = 0;
     }
-    dictionary[arrayObj[i][key as keyof TokenType] as string]++
+    dictionary[arrayObj[i][key as keyof TokenType] as string]++;
   }
-  return dictionary
-}
+  return dictionary;
+};
 
 const balanceWeights = (sortable: [string, number][]) => {
   /**
@@ -101,26 +100,26 @@ const balanceWeights = (sortable: [string, number][]) => {
  * @returns
  */
 const defineRanking = (key: string, obj: { [key: string]: number }) => {
-  let sortable: [string, number][] = []
-  let resultObj: { [key: string]: number } = {}
-  let previousCount: number = 0
+  let sortable: [string, number][] = [];
+  const resultObj: { [key: string]: number } = {};
 
   // Set values as an array
-  for (let attr in obj) {
-    sortable.push([attr, obj[attr]])
+  for (const attr in obj) {
+    sortable.push([attr, obj[attr]]);
   }
 
   // Sort them
-  sortable.sort((a, b) => a[1] - b[1])
+  sortable.sort((a, b) => a[1] - b[1]);
 
   // Adjust for 0, adding 1
   sortable = balanceWeights(sortable)
+  // Old function: sortable = sortable.map((i, k) => [i[0], k + 1]);
 
   // Set values for result
-  sortable.forEach((i) => (resultObj[i[0]] = i[1]))
+  sortable.forEach((i) => (resultObj[i[0]] = i[1]));
 
-  return resultObj
-}
+  return resultObj;
+};
 
 // Validate Flags
 // ========================================================
@@ -153,15 +152,15 @@ process.argv.map((flag: string) => {
 const init = () => {
   // Double check if file exists
   if (!fs.existsSync(DATA_JSON_FILE)) {
-    console.log(formatText('Error! data.json file not found.', 'red'))
-    process.exit(0)
+    console.log(formatText('Error! data.json file not found.', 'red'));
+    process.exit(0);
   }
 
   // Read data and validate
-  JSON_DATA = JSON.parse(fs.readFileSync(DATA_JSON_FILE).toString())
+  JSON_DATA = JSON.parse(fs.readFileSync(DATA_JSON_FILE).toString());
   if (!JSON_DATA.tokens || JSON_DATA.tokens.length === 0) {
-    console.log(formatText('Error! No tokens found.', 'red'))
-    process.exit(0)
+    console.log(formatText('Error! No tokens found.', 'red'));
+    process.exit(0);
   }
 
   // Notify user of count
@@ -171,27 +170,27 @@ const init = () => {
         `Warning! these stats only cover ${JSON_DATA.tokens.length} of ${TOTAL_TOKENS}.`,
         'yellow',
       ),
-    )
+    );
     console.log(
       formatText('Data may not be a fully accurate data set!', 'yellow'),
-    )
+    );
   } else if (JSON_DATA.tokens.length > TOTAL_TOKENS) {
     console.log(
       formatText(
         `The data.json file should contain a maximum of ${TOTAL_TOKENS}!`,
         'yellow',
       ),
-    )
+    );
   }
 
   // Find all occurances
   for (let i = 0; i < KEYS.length; i++) {
-    OCCURANCES[KEYS[i]] = findOccurances(KEYS[i], JSON_DATA.tokens)
+    OCCURANCES[KEYS[i]] = findOccurances(KEYS[i], JSON_DATA.tokens);
   }
 
   // Define ranking
   for (let i = 0; i < KEYS.length; i++) {
-    RANKING[KEYS[i]] = defineRanking(KEYS[i], OCCURANCES[KEYS[i]])
+    RANKING[KEYS[i]] = defineRanking(KEYS[i], OCCURANCES[KEYS[i]]);
   }
 
   if (SHOW_WEIGHTS) {
@@ -280,9 +279,10 @@ const init = () => {
       )
       console.log(JSON_DATA_RANKING[0])
     }
-  }
+ }
+};
 
 /**
  *
  */
-init()
+init();

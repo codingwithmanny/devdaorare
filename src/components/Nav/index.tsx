@@ -1,10 +1,10 @@
 // Imports
 // ========================================================
-import React from 'react'
-import { Link, Container, Flex, Spacer } from '@chakra-ui/layout'
-import { Box } from '@chakra-ui/react'
-import { CONTAINER_SPACING } from '../../utils/constants'
-import { LogoIcon, GitHubIcon } from '../Icons'
+import React from 'react';
+import { Link, Container, Flex, Spacer } from '@chakra-ui/layout';
+import { Box } from '@chakra-ui/react';
+import { CONTAINER_SPACING } from '../../utils/constants';
+import { LogoIcon, GitHubIcon } from '../Icons';
 
 // Component
 // ========================================================
@@ -47,9 +47,9 @@ const NavComponent = () => {
         </Flex>
       </Container>
     </nav>
-  )
-}
+  );
+};
 
 // Exports
 // ========================================================
-export default NavComponent
+export default NavComponent;

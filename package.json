@@ -4,12 +4,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --fix",
+    "lint": "eslint '{src,scripts}/**/*.{js,ts,tsx}'",
+    "lint:fix": "eslint '{src,scripts}/**/*.{js,ts,tsx}' --fix",
     "serve": "vite preview",
     "stats": "ts-node -P ./tsconfig.node.json scripts/stats.ts",
     "pull": "ts-node -P ./tsconfig.node.json scripts/pull.ts",
     "public": "cp scripts/data.json public/data/data.json",
     "prepare": "husky install",
+    "test:all": "yarn lint; yarn test:scripts;",
     "test:scripts": "./node_modules/.bin/jest --config=jest.config.node.json"
   },
   "dependencies": {

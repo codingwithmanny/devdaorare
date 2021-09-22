@@ -1,20 +1,20 @@
 // Imports
 // ========================================================
-import React, { useState, useEffect } from 'react'
-import { ethers, getDefaultProvider } from 'ethers'
-import { SearchIcon } from './components/Icons'
+import React, { useEffect } from 'react';
+// import { ethers, getDefaultProvider } from 'ethers';
+import { SearchIcon } from './components/Icons';
 
 // Contract
 import {
   CONTAINER_SPACING,
   CONTAINER_SPACING_VERTIVAL,
-  CONTRACT_ADDRESS,
-} from './utils/constants'
-import DevContract from './contract/Dev.json'
-import NavComponent from './components/Nav'
-import FooterComponent from './components/Footer'
-import { Container, Wrap, WrapItem, Box, Flex } from '@chakra-ui/layout'
-import { Input, Heading } from '@chakra-ui/react'
+  // CONTRACT_ADDRESS,
+} from './utils/constants';
+// import DevContract from './contract/Dev.json';
+import NavComponent from './components/Nav';
+import FooterComponent from './components/Footer';
+import { Container, Wrap, WrapItem, Box, Flex } from '@chakra-ui/layout';
+import { Input, Heading } from '@chakra-ui/react';
 
 // Main Component
 // ========================================================
@@ -24,7 +24,7 @@ import { Input, Heading } from '@chakra-ui/react'
  */
 const App = () => {
   // State / Props
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0);
 
   // Functions
 
@@ -32,7 +32,7 @@ const App = () => {
   useEffect(() => {
     const init = async () => {
       if (typeof window.ethereum !== 'undefined') {
-        console.log('Ethereum enabled!')
+        console.log('Ethereum enabled!');
         // Note: this will be throttled based on the user's personal browser so we will have to handle error handling
         //  ========= NOTICE =========
         //  Request-Rate Exceeded  (this message will not be repeated)
@@ -57,10 +57,10 @@ const App = () => {
         //   console.log({ error });
         // }
       }
-    }
+    };
 
-    init()
-  }, [])
+    init();
+  }, []);
 
   // Render
   return (
@@ -177,10 +177,7 @@ const App = () => {
                     <Input
                       pl="30px"
                       borderRadius="32px"
-                      borderWidth="1px"
-                      focusBorderColor="brand.700"
                       _placeholder={{ color: 'brand.300' }}
-                      _focus={{ borderColor: 'brand.700' }}
                       fontSize="sm"
                       borderColor="brand.100"
                       color="red.500"
@@ -206,9 +203,9 @@ const App = () => {
       </Box>
       <FooterComponent />
     </div>
-  )
-}
+  );
+};
 
 // Exports
 // ========================================================
-export default App
+export default App;

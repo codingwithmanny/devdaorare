@@ -5,6 +5,9 @@ dist-ssr
 *.local
 *.log
 .eslintcache
+package-lock.json
 scripts/.env
 scripts/.apicount
 scripts/.lastid
+# remove later
+*.zip
