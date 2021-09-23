@@ -85,6 +85,20 @@ The script will create two files when executing the script:
 
 ## Stats Data Script
 
+The _stats.ts_ file is in charge of generating the appropriate rarity ranking.
+
+### Script Commands:
+
+- `-weights` - Shows the weights used for each trait - `void`
+- `-id` - id to retrieve rarity stats - Expects an `integer` between `1` and
+  `TOTAL_TOKENS`
+- `-results` - number of results to show - Expects an `integer` between `1` and
+  `TOTAL_TOKENS` . By de fault is `50`-
+- `-generate` - outputs the `JSON_DATA_RANKING` result to `DATA_STATS_FILE` -
+  `void`
+
+You can easily run using:
+
 ```bash
 yarn stats;
 ```
