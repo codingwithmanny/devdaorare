@@ -5,7 +5,7 @@ import { Link, Container, Flex, Box } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
 import {
   CONTAINER_SPACING,
-  CONTAINER_SPACING_VERTIVAL,
+  CONTAINER_SPACING_VERTICAL,
   DATA_FILE,
 } from '../../utils/constants';
 import { LogoIcon } from '../Icons';
@@ -43,7 +43,7 @@ const FooterComponent = () => {
         bg="brand.700"
         maxW="full"
         px={CONTAINER_SPACING}
-        py={CONTAINER_SPACING_VERTIVAL}
+        py={CONTAINER_SPACING_VERTICAL}
         color="brand.800"
       >
         <Flex flexWrap="wrap">

@@ -1,32 +1,44 @@
 // Imports
 // ========================================================
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { ethers, getDefaultProvider } from 'ethers';
-import { SearchIcon } from './components/Icons';
 
+import { SearchIcon } from './components/Icons';
 // Contract
 import {
   CONTAINER_SPACING,
-  CONTAINER_SPACING_VERTIVAL,
+  CONTAINER_SPACING_VERTICAL,
   // CONTRACT_ADDRESS,
 } from './utils/constants';
 // import DevContract from './contract/Dev.json';
 import NavComponent from './components/Nav';
 import FooterComponent from './components/Footer';
-import { Container, Wrap, WrapItem, Box, Flex } from '@chakra-ui/layout';
-import { Input, Heading } from '@chakra-ui/react';
+import { Container, Wrap, Text, WrapItem, Box, Flex } from '@chakra-ui/layout';
+import { Input, Heading, Tag, TagLabel } from '@chakra-ui/react';
+import { RankingTable } from './components/RankingTable';
+import { DevDetails } from './components/DevDetails';
 
 // Main Component
 // ========================================================
+
+type AppData = {
+  tokenId: number;
+};
 /**
  *
  * @returns
  */
 const App = () => {
   // State / Props
-  // const [count, setCount] = useState(0);
+  const [tokenData, changeTokenId] = useState<AppData>({ tokenId: 712 });
 
   // Functions
+  /*const changeTokenId = (_tokenId: number) => {
+    console.log("Token ID changed to "+_tokenId)
+    tokenData = {
+      tokenId: _tokenId
+    }
+  }*/
 
   // Hooks
   useEffect(() => {
@@ -77,7 +89,7 @@ const App = () => {
             >
               <Container
                 px={CONTAINER_SPACING}
-                py={CONTAINER_SPACING_VERTIVAL}
+                py={CONTAINER_SPACING_VERTICAL}
                 m="0"
                 w="full"
                 maxW="full"
@@ -100,7 +112,12 @@ const App = () => {
                       borderColor="brand.100"
                       color="red.500"
                       type="search"
+                      min="1"
+                      max="8000"
                       placeholder="Search DevDAO Id"
+                      onChange={(e) =>
+                        changeTokenId({ tokenId: Number(e.target.value) })
+                      }
                     />
                     <SearchIcon
                       h="11px"
@@ -128,6 +145,29 @@ const App = () => {
                     <Heading as="h3" size="sm" fontWeight="600" color="white">
                       Developer
                     </Heading>
+
+                    <Tag
+                      as="div"
+                      verticalAlign="middle"
+                      fontFamily="bodyJB"
+                      background="brand.500"
+                      borderRadius="50px"
+                      padding="10px 20px"
+                    >
+                      <TagLabel>
+                        <Text as="span" fontSize="lg" color="brand.400">
+                          #&nbsp;
+                        </Text>
+                        <Text
+                          as="span"
+                          fontSize="lg"
+                          color="white"
+                          fontWeight="bold"
+                        >
+                          {Number(tokenData.tokenId)}
+                        </Text>
+                      </TagLabel>
+                    </Tag>
                   </Flex>
                   <Box as="div" bg="white" borderRadius="4px">
                     <Box as="img" src="/blank.png" w="100%" />
@@ -138,65 +178,21 @@ const App = () => {
             <WrapItem w={{ base: '100%', md: '50%', xl: '33.33%' }}>
               <Container
                 px={CONTAINER_SPACING}
-                py={CONTAINER_SPACING_VERTIVAL}
+                py={CONTAINER_SPACING_VERTICAL}
                 m="0"
                 w="full"
                 maxW="full"
               >
-                <Flex
-                  alignItems="center"
-                  justifyContent="space-between"
-                  mb={CONTAINER_SPACING}
-                >
-                  <Heading as="h1" size="sm" fontWeight="600" color="brand.600">
-                    Details
-                  </Heading>
-                </Flex>
+                <DevDetails tokenId={tokenData.tokenId} />
               </Container>
             </WrapItem>
             <WrapItem
               w={{ base: '100%', md: '100%', xl: '33.33%' }}
               bg="brand.600"
+              direction="column"
+              spacing="0px"
             >
-              <Container
-                px={CONTAINER_SPACING}
-                py={CONTAINER_SPACING_VERTIVAL}
-                m="0"
-                w="full"
-                maxW="full"
-              >
-                <Flex
-                  alignItems="center"
-                  justifyContent="space-between"
-                  mb={CONTAINER_SPACING}
-                >
-                  <Heading as="h1" size="sm" fontWeight="600" color="white">
-                    Ranking Table
-                  </Heading>
-                  <Box as="div" position="relative">
-                    <Input
-                      pl="30px"
-                      borderRadius="32px"
-                      _placeholder={{ color: 'brand.300' }}
-                      fontSize="sm"
-                      borderColor="brand.100"
-                      color="red.500"
-                      type="search"
-                      placeholder="Search DevDAO Id"
-                    />
-                    <SearchIcon
-                      h="11px"
-                      w="11px"
-                      position="absolute"
-                      top="0"
-                      bottom="0"
-                      left="14px"
-                      my="auto"
-                      opacity="0.6"
-                    />
-                  </Box>
-                </Flex>
-              </Container>
+              <RankingTable />
             </WrapItem>
           </Wrap>
         </Container>
