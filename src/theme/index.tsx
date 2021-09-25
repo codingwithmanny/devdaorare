@@ -24,6 +24,11 @@ const theme = extendTheme({
       600: '#121212',
       700: '#008DFF',
       800: '#A3D6FF',
+
+      801: '#1e1e1e',
+
+      900: '#e4f7e4',
+      901: '#78d876',
     },
   },
   components: {
@@ -72,7 +77,7 @@ const theme = extendTheme({
           tr: {
             _even: {
               color: 'white',
-              background: 'brand.500',
+              background: 'brand.801',
             },
             _odd: {
               color: 'white',

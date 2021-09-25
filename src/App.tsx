@@ -16,7 +16,7 @@ import FooterComponent from './components/Footer';
 import { Container, Wrap, Text, WrapItem, Box, Flex } from '@chakra-ui/layout';
 import { Input, Heading, Tag, TagLabel } from '@chakra-ui/react';
 import { RankingTable } from './components/RankingTable';
-import { DevDetails } from './components/DevDetails';
+import { DevDetails, TokenImage } from './components/DevDetails';
 
 // Main Component
 // ========================================================
@@ -111,12 +111,18 @@ const App = () => {
                       fontSize="sm"
                       borderColor="brand.100"
                       color="red.500"
-                      type="search"
+                      type="number"
                       min="1"
                       max="8000"
                       placeholder="Search DevDAO Id"
                       onChange={(e) =>
-                        changeTokenId({ tokenId: Number(e.target.value) })
+                        changeTokenId({
+                          tokenId:
+                            Number(e.target.value) >= 1 &&
+                            Number(e.target.value) <= 8000
+                              ? Number(e.target.value)
+                              : 1,
+                        })
                       }
                     />
                     <SearchIcon
@@ -170,7 +176,7 @@ const App = () => {
                     </Tag>
                   </Flex>
                   <Box as="div" bg="white" borderRadius="4px">
-                    <Box as="img" src="/blank.png" w="100%" />
+                    {TokenImage(tokenData.tokenId)}
                   </Box>
                 </Box>
               </Container>

@@ -38,17 +38,12 @@ export const RankingTable = () => {
   });
 
   return (
-    <Container
-      m="0"
-      w="full"
-      maxW="full"
-      px={CONTAINER_SPACING}
-      py={CONTAINER_SPACING_VERTICAL}
-    >
+    <Container m="0" w="full" maxW="full" p="0">
       <Flex
         alignItems="center"
         justifyContent="space-between"
-        mb={CONTAINER_SPACING}
+        px={CONTAINER_SPACING}
+        py={CONTAINER_SPACING_VERTICAL}
       >
         <Heading as="h1" size="sm" fontWeight="600" color="white">
           Ranking Table
@@ -59,8 +54,9 @@ export const RankingTable = () => {
             borderRadius="32px"
             _placeholder={{ color: 'brand.300' }}
             fontSize="sm"
-            borderColor="brand.100"
-            color="red.500"
+            border="0"
+            color="white"
+            background="brand.500"
             type="search"
             placeholder="Search DevDAO Id"
             onChange={(e) =>
@@ -113,7 +109,7 @@ export const RankingTable = () => {
                 return false;
               })
               .map((dev, i) => {
-                if (i > 20) return '';
+                if (i > 10) return '';
                 return (
                   <Tr key={dev.id}>
                     <Td>#{dev.id}</Td>
@@ -124,9 +120,9 @@ export const RankingTable = () => {
                         fontWeight="bold"
                         color="brand.700"
                       >
-                        {dev.rarityScore.toFixed(2)}%
+                        {(dev.rarityScore * 100).toFixed(2)}%
                       </Text>
-                      / {dev.id}
+                      / {dev.rarityRanking}
                     </Td>
                   </Tr>
                 );
