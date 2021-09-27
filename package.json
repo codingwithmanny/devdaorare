@@ -1,6 +1,10 @@
 {
   "name": "devdaorare",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "main": "src/main.tsx",
+  "repository": "https://github.com/codingwithmanny/devdaorare",
+  "author": "@codingwithmanny",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -12,7 +16,8 @@
     "public": "cp scripts/data.json public/data/data.json",
     "prepare": "husky install",
     "test:all": "yarn lint; yarn test:scripts;",
-    "test:scripts": "./node_modules/.bin/jest --config=jest.config.node.json"
+    "test:scripts": "./node_modules/.bin/jest --config=jest.config.node.json",
+    "pages": "tsc && vite build && rm -rf docs && mkdir docs && cp -R dist/* docs && sed -i '' 's|window.*|window.PREFIX=\"/devdaorare\";|' docs/index.html && sed -i '' 's|/assets|assets|' docs/index.html"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.7",

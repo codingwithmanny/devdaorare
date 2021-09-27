@@ -14,7 +14,7 @@ import {
 import NavComponent from './components/Nav';
 import FooterComponent from './components/Footer';
 import { Container, Wrap, Text, WrapItem, Box, Flex } from '@chakra-ui/layout';
-import { Input, Heading, Tag, TagLabel } from '@chakra-ui/react';
+import { Input, Heading, Tag, TagLabel, Fade } from '@chakra-ui/react';
 import { RankingTable } from './components/RankingTable';
 import { DevDetails, TokenImage } from './components/DevDetails';
 
@@ -30,7 +30,8 @@ type AppData = {
  */
 const App = () => {
   // State / Props
-  const [tokenData, changeTokenId] = useState<AppData>({ tokenId: 712 });
+  //const [tokenData, changeTokenId] = useState<AppData>({ tokenId: 712 });
+  const [visible, setVisible] = useState(false);
 
   // Functions
   /*const changeTokenId = (_tokenId: number) => {
@@ -72,11 +73,15 @@ const App = () => {
     };
 
     init();
+
+    // Fade In
+    setVisible(true);
   }, []);
 
   // Render
   return (
     <div className="App">
+      <Fade in={visible} delay={0.5}>
       <NavComponent />
       <Box as="main" bg="white">
         <Container maxW="full" px="0px">
@@ -137,7 +142,7 @@ const App = () => {
                     />
                   </Box>
                 </Flex>
-                <Box
+               <Box
                   bg="brand.600"
                   w="full"
                   p={CONTAINER_SPACING}
@@ -204,6 +209,7 @@ const App = () => {
         </Container>
       </Box>
       <FooterComponent />
+      </Fade>
     </div>
   );
 };
@@ -211,3 +217,4 @@ const App = () => {
 // Exports
 // ========================================================
 export default App;
+

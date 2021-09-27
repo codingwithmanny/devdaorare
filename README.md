@@ -5,6 +5,9 @@ The website shows the rarity based on how often keywords are used and weights
 each keyword to give an average rarity value (lowest number being the most
 rare).
 
+**Website:**
+[https://codingwithmanny.github.io/devdaorare/](https://codingwithmanny.github.io/devdaorare/)
+
 ## Requirements
 
 - NVM or NodeJS `v14.17.6`
@@ -101,4 +104,12 @@ You can easily run using:
 
 ```bash
 yarn stats;
+```
+
+## GitHub Page Generation
+
+Generates deployed data to the `/docs` folder for GitHub Pages.
+
+```bash
+yarn pages;
 ```

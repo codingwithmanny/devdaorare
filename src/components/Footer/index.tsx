@@ -33,7 +33,7 @@ const FooterComponent = () => {
    *
    */
   const onClickDownload = () => {
-    window.location.href = DATA_FILE;
+    window.location.href = `${window.PREFIX}/${DATA_FILE}`;
   };
 
   // Render
@@ -65,7 +65,11 @@ const FooterComponent = () => {
                   @codingwithmanny
                 </Link>
                 ,{' '}
-                <Link color="white" href="https://github.com/jsgm" isExternal>
+                <Link
+                  color="white"
+                  href="https://github.com/jsgm"
+                  isExternal
+                >
                   @jsgm
                 </Link>
                 , &amp;{' '}
@@ -74,7 +78,7 @@ const FooterComponent = () => {
                   color="white"
                   isExternal
                 >
-                  @with-heart
+                  @with-heart{' '}
                 </Link>
               </Box>
             </Flex>
