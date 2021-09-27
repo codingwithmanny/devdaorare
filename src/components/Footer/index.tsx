@@ -33,7 +33,7 @@ const FooterComponent = () => {
    *
    */
   const onClickDownload = () => {
-    window.location.href = DATA_FILE;
+    window.location.href = `${window.PREFIX}/${DATA_FILE}`;
   };
 
   // Render
