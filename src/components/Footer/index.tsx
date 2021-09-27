@@ -56,8 +56,30 @@ const FooterComponent = () => {
             <Flex alignItems="center">
               <LogoIcon variation="small" w="14px" h="14px" mr="5px" />
               <Box as="p" fontSize="xs" fontWeight="500">
-                Project Created By <Link color="white">@person</Link> &amp;{' '}
-                <Link color="white">@otherperson</Link>
+                Project Created By{' '}
+                <Link
+                  color="white"
+                  href="https://github.com/codingwithmanny"
+                  target="_blank"
+                >
+                  @codingwithmanny
+                </Link>
+                ,{' '}
+                <Link
+                  color="white"
+                  href="https://github.com/jsgm"
+                  target="_blank"
+                >
+                  @jsgm
+                </Link>
+                , &amp;{' '}
+                <Link
+                  color="white"
+                  href="https://github.com/with-heart"
+                  target="_blank"
+                >
+                  @with-heart{' '}
+                </Link>
               </Box>
             </Flex>
             <Box
