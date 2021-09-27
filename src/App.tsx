@@ -130,7 +130,7 @@ const App = () => {
                     </Heading>
                   </Flex>
                   <Box as="div" bg="white" borderRadius="4px">
-                    <Box as="img" src="/blank.png" w="100%" />
+                    <Box as="img" src={`${window.PREFIX}/blank.png`} w="100%" />
                   </Box>
                 </Box>
               </Container>
