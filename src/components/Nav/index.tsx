@@ -23,7 +23,7 @@ const NavComponent = () => {
       >
         <Flex alignItems="center" height="60px">
           <Link
-            href="/"
+            href={`${window.PREFIX}/`}
             title="Developer DAO Rare"
             color="brand.400"
             fontWeight="600"

@@ -102,3 +102,11 @@ You can easily run using:
 ```bash
 yarn stats;
 ```
+
+## GitHub Page Generation
+
+Generates deployed data to the `/docs` folder for GitHub Pages.
+
+```bash
+yarn pages;
+```
