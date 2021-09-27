@@ -109,7 +109,7 @@ const I = s({
   W = ({ children: e }) => d.createElement(p, { theme: I }, e),
   F = ({ children: e }) =>
     d.createElement('div', null, d.createElement(W, null, e)),
-  S = (e) => {
+  R = (e) => {
     var t = e,
       { variation: r = '' } = t,
       l = c(t, ['variation']);
@@ -171,7 +171,7 @@ const I = s({
           }),
         );
   },
-  O = (e) => {
+  S = (e) => {
     var t = c(e, []);
     return d.createElement(
       f,
@@ -194,7 +194,7 @@ const I = s({
       }),
     );
   },
-  R = (e) => {
+  O = (e) => {
     var t = c(e, []);
     return d.createElement(
       f,
@@ -240,14 +240,14 @@ const I = s({
           d.createElement(
             b,
             {
-              href: '/',
+              href: `${window.PREFIX}/`,
               title: 'Developer DAO Rare',
               color: 'brand.400',
               fontWeight: '600',
               display: 'flex',
               _hover: { textDecoration: 'none' },
             },
-            d.createElement(S, { mr: '5px', w: '24px' }),
+            d.createElement(R, { mr: '5px', w: '24px' }),
             'DevDao',
             d.createElement(f, { as: 'span', color: 'white' }, 'Rare'),
           ),
@@ -259,7 +259,7 @@ const I = s({
               href: 'https://github.com/codingwithmanny/devdaorare',
               target: '_blank',
             },
-            d.createElement(O, { h: '21px', w: '21px' }),
+            d.createElement(S, { h: '21px', w: '21px' }),
           ),
         ),
       ),
@@ -285,7 +285,7 @@ const I = s({
             d.createElement(
               u,
               { alignItems: 'center' },
-              d.createElement(S, {
+              d.createElement(R, {
                 variation: 'small',
                 w: '14px',
                 h: '14px',
@@ -357,7 +357,7 @@ const I = s({
         ),
       ),
     ),
-  A = () => (
+  P = () => (
     w.exports.useEffect(() => {
       (async () => {
         void 0 !== window.ethereum && console.log('Ethereum enabled!');
@@ -418,7 +418,7 @@ const I = s({
                       type: 'search',
                       placeholder: 'Search DevDAO Id',
                     }),
-                    d.createElement(R, {
+                    d.createElement(O, {
                       h: '11px',
                       w: '11px',
                       position: 'absolute',
@@ -456,7 +456,7 @@ const I = s({
                     { as: 'div', bg: 'white', borderRadius: '4px' },
                     d.createElement(f, {
                       as: 'img',
-                      src: '/blank.png',
+                      src: `${window.PREFIX}/blank.png`,
                       w: '100%',
                     }),
                   ),
@@ -523,7 +523,7 @@ const I = s({
                       type: 'search',
                       placeholder: 'Search DevDAO Id',
                     }),
-                    d.createElement(R, {
+                    d.createElement(O, {
                       h: '11px',
                       w: '11px',
                       position: 'absolute',
@@ -547,7 +547,7 @@ D.render(
   d.createElement(
     d.StrictMode,
     null,
-    d.createElement(F, null, d.createElement(A, null)),
+    d.createElement(F, null, d.createElement(P, null)),
   ),
   document.getElementById('root'),
 );
