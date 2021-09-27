@@ -72,7 +72,7 @@ import {
     fetch(e.href, t);
   }
 })();
-const W = s({
+const F = s({
     fonts: {
       heading: `'IBM Plex Sans', ${null == (e = m.fonts) ? void 0 : e.heading}`,
       body: `'IBM Plex Sans',  ${null == (t = m.fonts) ? void 0 : t.body}`,
@@ -107,10 +107,10 @@ const W = s({
     },
     styles: { global: () => ({ body: { color: 'brand.400' } }) },
   }),
-  F = ({ children: e }) => d.createElement(p, { theme: W }, e),
-  S = ({ children: e }) =>
-    d.createElement('div', null, d.createElement(F, null, e)),
-  R = (e) => {
+  W = ({ children: e }) => d.createElement(p, { theme: F }, e),
+  R = ({ children: e }) =>
+    d.createElement('div', null, d.createElement(W, null, e)),
+  S = (e) => {
     var t = e,
       { variation: r = '' } = t,
       n = c(t, ['variation']);
@@ -248,7 +248,7 @@ const W = s({
               display: 'flex',
               _hover: { textDecoration: 'none' },
             },
-            d.createElement(R, { mr: '5px', w: '24px' }),
+            d.createElement(S, { mr: '5px', w: '24px' }),
             'DevDao',
             d.createElement(h, { as: 'span', color: 'white' }, 'Rare'),
           ),
@@ -265,7 +265,7 @@ const W = s({
         ),
       ),
     ),
-  _ = () =>
+  P = () =>
     d.createElement(
       'footer',
       null,
@@ -286,7 +286,7 @@ const W = s({
             d.createElement(
               u,
               { alignItems: 'center' },
-              d.createElement(R, {
+              d.createElement(S, {
                 variation: 'small',
                 w: '14px',
                 h: '14px',
@@ -377,7 +377,7 @@ const W = s({
               E,
               {
                 onClick: () => {
-                  window.location.href = 'data-2021-09-22.zip';
+                  window.location.href = `${window.PREFIX}/data-2021-09-22.zip`;
                 },
                 variant: 'outlineWhite',
               },
@@ -387,7 +387,7 @@ const W = s({
         ),
       ),
     ),
-  P = () => {
+  _ = () => {
     const [e, t] = w.exports.useState(!1);
     return (
       w.exports.useEffect(() => {
@@ -581,7 +581,7 @@ const W = s({
               ),
             ),
           ),
-          d.createElement(_, null),
+          d.createElement(P, null),
         ),
       )
     );
@@ -590,7 +590,7 @@ I.render(
   d.createElement(
     d.StrictMode,
     null,
-    d.createElement(S, null, d.createElement(P, null)),
+    d.createElement(R, null, d.createElement(_, null)),
   ),
   document.getElementById('root'),
 );
