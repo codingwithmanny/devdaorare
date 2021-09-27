@@ -1,25 +1,25 @@
 var e,
   t,
   r = Object.defineProperty,
-  l = Object.getOwnPropertySymbols,
-  n = Object.prototype.hasOwnProperty,
+  n = Object.getOwnPropertySymbols,
+  l = Object.prototype.hasOwnProperty,
   a = Object.prototype.propertyIsEnumerable,
-  o = (e, t, l) =>
+  o = (e, t, n) =>
     t in e
-      ? r(e, t, { enumerable: !0, configurable: !0, writable: !0, value: l })
-      : (e[t] = l),
+      ? r(e, t, { enumerable: !0, configurable: !0, writable: !0, value: n })
+      : (e[t] = n),
   i = (e, t) => {
-    for (var r in t || (t = {})) n.call(t, r) && o(e, r, t[r]);
-    if (l) for (var r of l(t)) a.call(t, r) && o(e, r, t[r]);
+    for (var r in t || (t = {})) l.call(t, r) && o(e, r, t[r]);
+    if (n) for (var r of n(t)) a.call(t, r) && o(e, r, t[r]);
     return e;
   },
   c =
     ('undefined' != typeof require && require,
     (e, t) => {
       var r = {};
-      for (var o in e) n.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);
-      if (null != e && l)
-        for (var o of l(e)) t.indexOf(o) < 0 && a.call(e, o) && (r[o] = e[o]);
+      for (var o in e) l.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);
+      if (null != e && n)
+        for (var o of n(e)) t.indexOf(o) < 0 && a.call(e, o) && (r[o] = e[o]);
       return r;
     });
 import {
@@ -27,19 +27,20 @@ import {
   t as m,
   R as d,
   C as p,
-  B as f,
-  a as h,
+  B as h,
+  a as f,
   F as u,
   L as b,
   S as x,
   b as E,
   r as w,
-  W as g,
-  c as v,
-  H as C,
-  I as y,
-  d as D,
-} from './vendor.a5f2cd1f.js';
+  c as g,
+  W as v,
+  d as C,
+  H as y,
+  I as D,
+  f as I,
+} from './vendor.037470b2.js';
 !(function () {
   const e = document.createElement('link').relList;
   if (!(e && e.supports && e.supports('modulepreload'))) {
@@ -71,7 +72,7 @@ import {
     fetch(e.href, t);
   }
 })();
-const I = s({
+const W = s({
     fonts: {
       heading: `'IBM Plex Sans', ${null == (e = m.fonts) ? void 0 : e.heading}`,
       body: `'IBM Plex Sans',  ${null == (t = m.fonts) ? void 0 : t.body}`,
@@ -106,16 +107,16 @@ const I = s({
     },
     styles: { global: () => ({ body: { color: 'brand.400' } }) },
   }),
-  W = ({ children: e }) => d.createElement(p, { theme: I }, e),
-  F = ({ children: e }) =>
-    d.createElement('div', null, d.createElement(W, null, e)),
+  F = ({ children: e }) => d.createElement(p, { theme: W }, e),
+  S = ({ children: e }) =>
+    d.createElement('div', null, d.createElement(F, null, e)),
   R = (e) => {
     var t = e,
       { variation: r = '' } = t,
-      l = c(t, ['variation']);
+      n = c(t, ['variation']);
     return 'small' === r
       ? d.createElement(
-          f,
+          h,
           i(
             {
               as: 'svg',
@@ -125,7 +126,7 @@ const I = s({
               fill: 'none',
               xmlns: 'http://www.w3.org/2000/svg',
             },
-            l,
+            n,
           ),
           d.createElement('rect', {
             x: '12.0208',
@@ -143,7 +144,7 @@ const I = s({
           }),
         )
       : d.createElement(
-          f,
+          h,
           i(
             {
               as: 'svg',
@@ -153,7 +154,7 @@ const I = s({
               fill: 'none',
               xmlns: 'http://www.w3.org/2000/svg',
             },
-            l,
+            n,
           ),
           d.createElement('rect', {
             x: '12.0208',
@@ -171,10 +172,10 @@ const I = s({
           }),
         );
   },
-  S = (e) => {
+  j = (e) => {
     var t = c(e, []);
     return d.createElement(
-      f,
+      h,
       i(
         {
           as: 'svg',
@@ -194,10 +195,10 @@ const I = s({
       }),
     );
   },
-  O = (e) => {
+  k = (e) => {
     var t = c(e, []);
     return d.createElement(
-      f,
+      h,
       i(
         {
           as: 'svg',
@@ -225,15 +226,15 @@ const I = s({
       }),
     );
   },
-  j = { base: '15px', md: '20px', lg: '30px' },
+  O = { base: '15px', md: '20px', lg: '30px' },
   B = { base: '30px' },
-  k = () =>
+  z = () =>
     d.createElement(
       'nav',
       null,
       d.createElement(
-        h,
-        { maxW: 'full', px: j, height: '60px', bg: 'brand.600' },
+        f,
+        { maxW: 'full', px: O, height: '60px', bg: 'brand.600' },
         d.createElement(
           u,
           { alignItems: 'center', height: '60px' },
@@ -249,7 +250,7 @@ const I = s({
             },
             d.createElement(R, { mr: '5px', w: '24px' }),
             'DevDao',
-            d.createElement(f, { as: 'span', color: 'white' }, 'Rare'),
+            d.createElement(h, { as: 'span', color: 'white' }, 'Rare'),
           ),
           d.createElement(x, null),
           d.createElement(
@@ -259,18 +260,18 @@ const I = s({
               href: 'https://github.com/codingwithmanny/devdaorare',
               target: '_blank',
             },
-            d.createElement(S, { h: '21px', w: '21px' }),
+            d.createElement(j, { h: '21px', w: '21px' }),
           ),
         ),
       ),
     ),
-  z = () =>
+  _ = () =>
     d.createElement(
       'footer',
       null,
       d.createElement(
-        h,
-        { bg: 'brand.700', maxW: 'full', px: j, py: B, color: 'brand.800' },
+        f,
+        { bg: 'brand.700', maxW: 'full', px: O, py: B, color: 'brand.800' },
         d.createElement(
           u,
           { flexWrap: 'wrap' },
@@ -292,17 +293,46 @@ const I = s({
                 mr: '5px',
               }),
               d.createElement(
-                f,
+                h,
                 { as: 'p', fontSize: 'xs', fontWeight: '500' },
-                'Project Created By ',
-                d.createElement(b, { color: 'white' }, '@person'),
-                ' &',
+                'Project Created By',
                 ' ',
-                d.createElement(b, { color: 'white' }, '@otherperson'),
+                d.createElement(
+                  b,
+                  {
+                    color: 'white',
+                    href: 'https://github.com/codingwithmanny',
+                    target: '_blank',
+                  },
+                  '@codingwithmanny',
+                ),
+                ',',
+                ' ',
+                d.createElement(
+                  b,
+                  {
+                    color: 'white',
+                    href: 'https://github.com/jsgm',
+                    target: '_blank',
+                  },
+                  '@jsgm',
+                ),
+                ', &',
+                ' ',
+                d.createElement(
+                  b,
+                  {
+                    color: 'white',
+                    href: 'https://github.com/with-heart',
+                    target: '_blank',
+                  },
+                  '@with-heart',
+                  ' ',
+                ),
               ),
             ),
             d.createElement(
-              f,
+              h,
               {
                 my: { base: '20px', md: '0px' },
                 as: 'p',
@@ -357,197 +387,210 @@ const I = s({
         ),
       ),
     ),
-  P = () => (
-    w.exports.useEffect(() => {
-      (async () => {
-        void 0 !== window.ethereum && console.log('Ethereum enabled!');
-      })();
-    }, []),
-    d.createElement(
-      'div',
-      { className: 'App' },
-      d.createElement(k, null),
+  P = () => {
+    const [e, t] = w.exports.useState(!1);
+    return (
+      w.exports.useEffect(() => {
+        (async () => {
+          void 0 !== window.ethereum && console.log('Ethereum enabled!');
+        })(),
+          t(!0);
+      }, []),
       d.createElement(
-        f,
-        { as: 'main', bg: 'white' },
+        'div',
+        { className: 'App' },
         d.createElement(
-          h,
-          { maxW: 'full', px: '0px' },
+          g,
+          { in: e, delay: 0.5 },
+          d.createElement(z, null),
           d.createElement(
-            g,
-            { spacing: '0px' },
+            h,
+            { as: 'main', bg: 'white' },
             d.createElement(
-              v,
-              {
-                w: { base: '100%', md: '50%', xl: '33.33%' },
-                borderRight: { base: 'none', md: '1px' },
-                borderBottom: { base: '1px', md: 'none' },
-                color: 'brand.100',
-              },
+              f,
+              { maxW: 'full', px: '0px' },
               d.createElement(
-                h,
-                { px: j, py: B, m: '0', w: 'full', maxW: 'full' },
+                v,
+                { spacing: '0px' },
                 d.createElement(
-                  u,
+                  C,
                   {
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    mb: j,
+                    w: { base: '100%', md: '50%', xl: '33.33%' },
+                    borderRight: { base: 'none', md: '1px' },
+                    borderBottom: { base: '1px', md: 'none' },
+                    color: 'brand.100',
                   },
                   d.createElement(
-                    C,
-                    {
-                      as: 'h1',
-                      size: 'sm',
-                      fontWeight: '600',
-                      color: 'brand.600',
-                    },
-                    'DevDAO ID',
-                  ),
-                  d.createElement(
                     f,
-                    { as: 'div', position: 'relative' },
-                    d.createElement(y, {
-                      pl: '30px',
-                      borderRadius: '32px',
-                      borderWidth: '1px',
-                      _placeholder: { color: 'brand.300' },
-                      fontSize: 'sm',
-                      borderColor: 'brand.100',
-                      color: 'red.500',
-                      type: 'search',
-                      placeholder: 'Search DevDAO Id',
-                    }),
-                    d.createElement(O, {
-                      h: '11px',
-                      w: '11px',
-                      position: 'absolute',
-                      top: '0',
-                      bottom: '0',
-                      left: '14px',
-                      my: 'auto',
-                      opacity: '0.6',
-                    }),
-                  ),
-                ),
-                d.createElement(
-                  f,
-                  { bg: 'brand.600', w: 'full', p: j, rounded: '6px' },
-                  d.createElement(
-                    u,
-                    {
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      mb: j,
-                    },
+                    { px: O, py: B, m: '0', w: 'full', maxW: 'full' },
                     d.createElement(
-                      C,
+                      u,
                       {
-                        as: 'h3',
-                        size: 'sm',
-                        fontWeight: '600',
-                        color: 'white',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        mb: O,
                       },
-                      'Developer',
+                      d.createElement(
+                        y,
+                        {
+                          as: 'h1',
+                          size: 'sm',
+                          fontWeight: '600',
+                          color: 'brand.600',
+                        },
+                        'DevDAO ID',
+                      ),
+                      d.createElement(
+                        h,
+                        { as: 'div', position: 'relative' },
+                        d.createElement(D, {
+                          pl: '30px',
+                          borderRadius: '32px',
+                          borderWidth: '1px',
+                          _placeholder: { color: 'brand.300' },
+                          fontSize: 'sm',
+                          borderColor: 'brand.100',
+                          color: 'red.500',
+                          type: 'search',
+                          placeholder: 'Search DevDAO Id',
+                        }),
+                        d.createElement(k, {
+                          h: '11px',
+                          w: '11px',
+                          position: 'absolute',
+                          top: '0',
+                          bottom: '0',
+                          left: '14px',
+                          my: 'auto',
+                          opacity: '0.6',
+                        }),
+                      ),
+                    ),
+                    d.createElement(
+                      h,
+                      { bg: 'brand.600', w: 'full', p: O, rounded: '6px' },
+                      d.createElement(
+                        u,
+                        {
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          mb: O,
+                        },
+                        d.createElement(
+                          y,
+                          {
+                            as: 'h3',
+                            size: 'sm',
+                            fontWeight: '600',
+                            color: 'white',
+                          },
+                          'Developer',
+                        ),
+                      ),
+                      d.createElement(
+                        h,
+                        { as: 'div', bg: 'white', borderRadius: '4px' },
+                        d.createElement(h, {
+                          as: 'img',
+                          src: `${window.PREFIX}/blank.png`,
+                          w: '100%',
+                        }),
+                      ),
                     ),
                   ),
+                ),
+                d.createElement(
+                  C,
+                  { w: { base: '100%', md: '50%', xl: '33.33%' } },
                   d.createElement(
                     f,
-                    { as: 'div', bg: 'white', borderRadius: '4px' },
-                    d.createElement(f, {
-                      as: 'img',
-                      src: `${window.PREFIX}/blank.png`,
-                      w: '100%',
-                    }),
+                    { px: O, py: B, m: '0', w: 'full', maxW: 'full' },
+                    d.createElement(
+                      u,
+                      {
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        mb: O,
+                      },
+                      d.createElement(
+                        y,
+                        {
+                          as: 'h1',
+                          size: 'sm',
+                          fontWeight: '600',
+                          color: 'brand.600',
+                        },
+                        'Details',
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            d.createElement(
-              v,
-              { w: { base: '100%', md: '50%', xl: '33.33%' } },
-              d.createElement(
-                h,
-                { px: j, py: B, m: '0', w: 'full', maxW: 'full' },
                 d.createElement(
-                  u,
+                  C,
                   {
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    mb: j,
+                    w: { base: '100%', md: '100%', xl: '33.33%' },
+                    bg: 'brand.600',
                   },
-                  d.createElement(
-                    C,
-                    {
-                      as: 'h1',
-                      size: 'sm',
-                      fontWeight: '600',
-                      color: 'brand.600',
-                    },
-                    'Details',
-                  ),
-                ),
-              ),
-            ),
-            d.createElement(
-              v,
-              {
-                w: { base: '100%', md: '100%', xl: '33.33%' },
-                bg: 'brand.600',
-              },
-              d.createElement(
-                h,
-                { px: j, py: B, m: '0', w: 'full', maxW: 'full' },
-                d.createElement(
-                  u,
-                  {
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    mb: j,
-                  },
-                  d.createElement(
-                    C,
-                    { as: 'h1', size: 'sm', fontWeight: '600', color: 'white' },
-                    'Ranking Table',
-                  ),
                   d.createElement(
                     f,
-                    { as: 'div', position: 'relative' },
-                    d.createElement(y, {
-                      pl: '30px',
-                      borderRadius: '32px',
-                      _placeholder: { color: 'brand.300' },
-                      fontSize: 'sm',
-                      borderColor: 'brand.100',
-                      color: 'red.500',
-                      type: 'search',
-                      placeholder: 'Search DevDAO Id',
-                    }),
-                    d.createElement(O, {
-                      h: '11px',
-                      w: '11px',
-                      position: 'absolute',
-                      top: '0',
-                      bottom: '0',
-                      left: '14px',
-                      my: 'auto',
-                      opacity: '0.6',
-                    }),
+                    { px: O, py: B, m: '0', w: 'full', maxW: 'full' },
+                    d.createElement(
+                      u,
+                      {
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        mb: O,
+                      },
+                      d.createElement(
+                        y,
+                        {
+                          as: 'h1',
+                          size: 'sm',
+                          fontWeight: '600',
+                          color: 'white',
+                        },
+                        'Ranking Table',
+                      ),
+                      d.createElement(
+                        h,
+                        { as: 'div', position: 'relative' },
+                        d.createElement(D, {
+                          pl: '30px',
+                          borderRadius: '32px',
+                          _placeholder: { color: 'brand.300' },
+                          fontSize: 'sm',
+                          borderColor: 'brand.100',
+                          color: 'red.500',
+                          type: 'search',
+                          placeholder: 'Search DevDAO Id',
+                        }),
+                        d.createElement(k, {
+                          h: '11px',
+                          w: '11px',
+                          position: 'absolute',
+                          top: '0',
+                          bottom: '0',
+                          left: '14px',
+                          my: 'auto',
+                          opacity: '0.6',
+                        }),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
+          d.createElement(_, null),
         ),
-      ),
-      d.createElement(z, null),
-    )
-  );
-D.render(
+      )
+    );
+  };
+I.render(
   d.createElement(
     d.StrictMode,
     null,
-    d.createElement(F, null, d.createElement(P, null)),
+    d.createElement(S, null, d.createElement(P, null)),
   ),
   document.getElementById('root'),
 );
