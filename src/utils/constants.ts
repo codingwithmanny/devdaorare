@@ -17,4 +17,18 @@ export const CONTAINER_SPACING = { base: '15px', md: '20px', lg: '30px' };
 /**
  *
  */
-export const CONTAINER_SPACING_VERTIVAL = { base: '30px' };
+export const CONTAINER_SPACING_VERTICAL = { base: '30px' };
+
+/**
+ *
+ */
+export const DEV_TOKEN_TRAITS = {
+  os: 'OS',
+  textEditor: 'Text Editor',
+  clothing: 'Clothing',
+  language: 'Language',
+  industry: 'Industry',
+  location: 'Location',
+  mind: 'Mind',
+  vibe: 'Vibe',
+};

@@ -11,6 +11,7 @@ const theme = extendTheme({
   fonts: {
     heading: `'IBM Plex Sans', ${base.fonts?.heading}`,
     body: `'IBM Plex Sans',  ${base.fonts?.body}`,
+    bodyJB: `'JetBrains Mono',  ${base.fonts?.body}`,
     code: ``,
   },
   colors: {
@@ -23,6 +24,11 @@ const theme = extendTheme({
       600: '#121212',
       700: '#008DFF',
       800: '#A3D6FF',
+
+      801: '#1e1e1e',
+
+      900: '#e4f7e4',
+      901: '#78d876',
     },
   },
   components: {
@@ -44,6 +50,38 @@ const theme = extendTheme({
           _hover: {
             background: 'white',
             color: 'brand.700',
+          },
+        },
+
+        dark: {
+          color: 'white',
+          background: 'brand.600',
+          borderWidth: '1px',
+          borderColor: 'white',
+          _hover: {
+            background: 'brand.700',
+            color: 'white',
+          },
+        },
+      },
+    },
+    Table: {
+      variants: {
+        rankingTable: {
+          background: 'transparent',
+          th: {
+            background: 'brand.500',
+            borderTopColor: 'brand.400',
+            borderTopWidth: '1px',
+          },
+          tr: {
+            _even: {
+              color: 'white',
+              background: 'brand.801',
+            },
+            _odd: {
+              color: 'white',
+            },
           },
         },
       },
